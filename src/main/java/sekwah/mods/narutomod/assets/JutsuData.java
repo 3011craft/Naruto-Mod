@@ -6,6 +6,8 @@ public class JutsuData {
 
     public static int fireballCost = 30;
 
+    public static int wallCost = 30;
+
     public static int waterBulletCost = 30;
 
     public static int shadowCloneCost = 40;

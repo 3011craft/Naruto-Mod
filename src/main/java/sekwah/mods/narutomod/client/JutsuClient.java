@@ -109,6 +109,16 @@ public class JutsuClient {
             case 1210:
                 // Doesnt do anything
                 break;
+            case 123:
+                PacketAnimationUpdate.animationUpdate("earthWall", playerMP);
+                playerMP.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + I18n.format("naruto.jutsu.earthWall")));
+                PlayerClientTickEvent.chakra -= JutsuData.wallCost;
+                PlayerClientTickEvent.chakraCooldown = 30;
+                // Doesnt do anything
+                break;
+            case 1230:
+                // Doesnt do anything
+                break;
             case 132:
                 PacketAnimationUpdate.animationUpdate("waterBullet", playerMP); // change to a water ball pose
                 playerMP.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + I18n.format("naruto.jutsu.waterBullet")));
@@ -158,6 +168,9 @@ public class JutsuClient {
                 return true;
             case 121:
                 if (PlayerClientTickEvent.chakra >= JutsuData.fireballCost) return true;
+                break;
+            case 123:
+                if (PlayerClientTickEvent.chakra >= JutsuData.wallCost) return true;
                 break;
             case 132:
                 if (PlayerClientTickEvent.chakra >= JutsuData.waterBulletCost) return true;

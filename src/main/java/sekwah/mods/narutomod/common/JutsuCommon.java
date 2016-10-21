@@ -139,6 +139,12 @@ public class JutsuCommon {
 
                 playerMP.worldObj.spawnEntityInWorld(fireball);
                 return true;
+            case 123:
+                // Sound is activated once the player touches the floor.
+                return true;
+            case 1230:
+                jutsuSound(4, playerMP);
+                return true;
             case 132:
                 jutsuSound(4, playerMP);
                 return true;
