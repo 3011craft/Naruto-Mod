@@ -1818,7 +1818,7 @@
         },
         "earthWall4" :{
             "animDuration": -1,
-            "animLength": 39,
+            "animLength": 79,
             "nextPose": "default",
             "locData" :{
                 "head": {
