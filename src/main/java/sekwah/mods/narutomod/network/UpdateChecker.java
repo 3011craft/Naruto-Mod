@@ -27,11 +27,11 @@ public class UpdateChecker/* extends Thread*/ {
 
     //public static String updatestatus = "checking";
     public static String updatetext = EnumChatFormatting.YELLOW + " - Checking for update";
-    public static boolean joinenabled = false;
-    public static String serverip = "localhost";
-    public static int serverport = 25565;
+    //public static boolean joinenabled = false;
+    //public static String serverip = "localhost";
+    //public static int serverport = 25565;
 
-    public static String servertext = "Join Naruto Server";
+    //public static String servertext = "Join Naruto Server";
 
     private final Timer threadTrigger = new Timer("Update Checker", true);
 
@@ -155,7 +155,7 @@ public class UpdateChecker/* extends Thread*/ {
             updatetext = EnumChatFormatting.RED + " - Could not connect to the update info file :(";
         }
 
-        try {
+        /*try {
             URL urlServer = new URL("http://www.sekwah.com/naruto-mod/OfficialServerInfo.txt");
             URLConnection connection = urlServer.openConnection();
             connection.setConnectTimeout(4000);
@@ -169,7 +169,7 @@ public class UpdateChecker/* extends Thread*/ {
             joinenabled = false;
         } catch (NumberFormatException ex) {
             joinenabled = false;
-        }
+        }*/
     }
 
     private String readJSONFileStream(InputStream filestreamJson) throws IOException {

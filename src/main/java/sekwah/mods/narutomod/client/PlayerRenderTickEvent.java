@@ -1,8 +1,10 @@
 package sekwah.mods.narutomod.client;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import sekwah.mods.narutomod.NarutoMod;
 import sekwah.mods.narutomod.animation.NarutoAnimator;
+import sekwah.mods.narutomod.network.UpdateChecker;
 import sekwah.mods.narutomod.player.RenderNinjaPlayer;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -20,6 +22,9 @@ import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.player.EntityPlayer;
 import sekwah.mods.narutomod.client.gui.GuiNarutoMainMenu;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 public class PlayerRenderTickEvent {
 
     public static float delta = 0;
@@ -27,6 +32,8 @@ public class PlayerRenderTickEvent {
     private static GuiScreen guiToShow = null;
     private static int renderDelay = 0;
     private long lastTime;
+
+    private boolean brandingSet = false;
 
     @SubscribeEvent
     public void tick(RenderTickEvent event) {
@@ -49,7 +56,33 @@ public class PlayerRenderTickEvent {
 
             GuiScreen guiscreen = Minecraft.getMinecraft().currentScreen;
             if (guiscreen instanceof GuiMainMenu) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiNarutoMainMenu());
+                if(!brandingSet){
+                    try {
+                        Field field = FMLCommonHandler.class.getDeclaredField("brandings");
+                        field.setAccessible(true);
+                        //System.out.println(field.get(null));
+                        Object obj = field.get(null);
+                        if (obj != null) {
+                            brandingSet = true;
+                            List<String> list = (List<String>) field.get(null);
+                            for (String val : list) {
+                                if (val.equals("Naruto Mod")) {
+                                    list.remove("Naruto Mod");
+                                    list.add("Naruto Mod v" + NarutoMod.version + UpdateChecker.updatetext);
+                                }
+                            }
+                            field.set(null, list);
+                        }
+                    } catch (NullPointerException e) {
+
+                        e.printStackTrace();
+                    } catch (NoSuchFieldException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //Minecraft.getMinecraft().displayGuiScreen(new GuiNarutoMainMenu());
             } else if (guiscreen == null || guiscreen instanceof GuiInventory || guiscreen instanceof GuiChat) {
 
                 if(guiToShow != null){
