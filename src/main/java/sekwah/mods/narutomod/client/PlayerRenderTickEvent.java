@@ -23,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import sekwah.mods.narutomod.client.gui.GuiNarutoMainMenu;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerRenderTickEvent {
@@ -60,21 +61,25 @@ public class PlayerRenderTickEvent {
                     try {
                         Field field = FMLCommonHandler.class.getDeclaredField("brandings");
                         field.setAccessible(true);
-                        //System.out.println(field.get(null));
-                        Object obj = field.get(null);
+                        Object obj = field.get(FMLCommonHandler.instance());
                         if (obj != null) {
-                            brandingSet = true;
-                            List<String> list = (List<String>) field.get(null);
+                            List<String> list = (List<String>) obj;
+                            List<String> brandlist = new ArrayList<String>();
                             for (String val : list) {
                                 if (val.equals("Naruto Mod")) {
-                                    list.remove("Naruto Mod");
-                                    list.add("Naruto Mod v" + NarutoMod.version + UpdateChecker.updatetext);
+                                    //list.remove("Naruto Mod");
+                                    //list.add("Naruto Mod v" + NarutoMod.version + UpdateChecker.updatetext);
+                                    brandlist.add("Naruto Mod v" + NarutoMod.version + UpdateChecker.updatetext);
+                                }
+                                else{
+                                    brandlist.add(val);
                                 }
                             }
-                            field.set(null, list);
+                            field.set(FMLCommonHandler.instance(), brandlist);
+                            NarutoMod.logger.info("Set Branding");
+                            brandingSet = true;
                         }
                     } catch (NullPointerException e) {
-
                         e.printStackTrace();
                     } catch (NoSuchFieldException e) {
                         e.printStackTrace();
